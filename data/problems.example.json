@@ -1,0 +1,62 @@
+{
+  "problems": [
+    {
+      "id": "E01",
+      "difficulty": "easy",
+      "title": "Print Hello World",
+      "description": "No input is provided. Write exactly the string 'Hello World!' to stdout with no extra whitespace before or after it.",
+      "runtime": {
+        "cell_bits": 8,
+        "cell_overflow": "wrap",
+        "negative_tape": "error",
+        "eof_value": 0,
+        "encoding": "utf-8",
+        "input_has_implicit_newline": false,
+        "timeout_seconds": 2.0,
+        "memory_bytes": 536870912,
+        "max_output_bytes": 65536,
+        "max_source_bytes": 1048576,
+        "max_input_bytes": 1048576,
+        "max_artifact_files": 128,
+        "max_text_file_bytes": 1048576,
+        "max_artifact_bytes": 4194304
+      },
+      "input_output_examples": [
+        {
+          "input": "",
+          "output": "Hello World!"
+        }
+      ]
+    },
+    {
+      "id": "E02",
+      "difficulty": "easy",
+      "title": "Echo Line",
+      "description": "Read one text line, which can be empty. Write it exactly as received. Preserve spaces and punctuation.",
+      "runtime": {
+        "cell_bits": 8,
+        "cell_overflow": "wrap",
+        "negative_tape": "error",
+        "eof_value": 0,
+        "encoding": "utf-8",
+        "input_has_implicit_newline": false,
+        "timeout_seconds": 2.0,
+        "memory_bytes": 536870912,
+        "max_output_bytes": 65536,
+        "max_source_bytes": 1048576,
+        "max_input_bytes": 1048576,
+        "max_artifact_files": 128,
+        "max_text_file_bytes": 1048576,
+        "max_artifact_bytes": 4194304
+      },
+      "input_output_examples": [
+        {"input": "Hello", "output": "Hello"},
+        {"input": "abc123", "output": "abc123"},
+        {"input": "Brainfuck is fun", "output": "Brainfuck is fun"},
+        {"input": "X", "output": "X"},
+        {"input": "!@#$%^&*()", "output": "!@#$%^&*()"},
+        {"input": "   spaces   ", "output": "   spaces   "}
+      ]
+    }
+  ]
+}

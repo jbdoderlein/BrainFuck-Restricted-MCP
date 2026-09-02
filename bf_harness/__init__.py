@@ -1,0 +1,1 @@
+"""Restricted Brainfuck evaluation harness."""
