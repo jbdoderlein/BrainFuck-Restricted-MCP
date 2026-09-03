@@ -204,7 +204,7 @@
       "id": "E04",
       "difficulty": "easy",
       "title": "Sum Two Integers",
-      "description": "Read two integers a and b separated by whitespace on one line. Output their sum a + b as a plain integer with no extra text.",
+      "description": "Read two integers a and b separated by whitespace on one line. Output their sum a + b as a plain integer with no extra text. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -237,7 +237,7 @@
       "id": "E05",
       "difficulty": "easy",
       "title": "Multiply Two Integers",
-      "description": "Read two integers a and b separated by whitespace on one line. Output the product a * b as a plain integer.",
+      "description": "Read two integers a and b separated by whitespace on one line. Output the product a * b as a plain integer. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -270,7 +270,7 @@
       "id": "E06",
       "difficulty": "easy",
       "title": "Even Or Odd",
-      "description": "Read a single integer n. If n is divisible by 2, output the word 'even'; otherwise output 'odd'.",
+      "description": "Read a single integer n. If n is divisible by 2, output the word 'even'; otherwise output 'odd'. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -402,7 +402,7 @@
       "id": "E10",
       "difficulty": "easy",
       "title": "Sum From 1 To N",
-      "description": "Read an integer N (which may be zero). Output the value of the arithmetic series 1 + 2 + ... + N. If N is zero, output 0. You may assume N is non-negative.",
+      "description": "Read an integer N (which may be zero). Output the value of the arithmetic series 1 + 2 + ... + N. If N is zero, output 0. You may assume N is non-negative. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -435,7 +435,7 @@
       "id": "E11",
       "difficulty": "easy",
       "title": "Sum Of Digits",
-      "description": "Read a possibly negative integer n. Take its absolute value, sum all decimal digits, and output the resulting integer.",
+      "description": "Read a possibly negative integer n. Take its absolute value, sum all decimal digits, and output the resulting integer. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -468,7 +468,7 @@
       "id": "E12",
       "difficulty": "easy",
       "title": "Minimum Of Two",
-      "description": "Read two integers a and b separated by whitespace and output the smaller value. If a and b are equal, output that shared value once.",
+      "description": "Read two integers a and b separated by whitespace and output the smaller value. If a and b are equal, output that shared value once. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -501,7 +501,7 @@
       "id": "E13",
       "difficulty": "easy",
       "title": "Maximum Of Three",
-      "description": "Read three integers a, b, and c separated by spaces. Output the largest of the three values as an integer.",
+      "description": "Read three integers a, b, and c separated by spaces. Output the largest of the three values as an integer. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -699,7 +699,7 @@
       "id": "E19",
       "difficulty": "easy",
       "title": "Integer Average Of Two",
-      "description": "Read two integers a and b separated by whitespace. Compute the integer average (a + b) / 2 using truncating division toward zero and output the result.",
+      "description": "Read two integers a and b separated by whitespace. Compute the integer average (a + b) / 2 using truncating division toward zero and output the result. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -732,7 +732,7 @@
       "id": "E20",
       "difficulty": "easy",
       "title": "Compare Two Integers",
-      "description": "Read two integers a and b separated by whitespace. Output 'less' if a < b, 'greater' if a > b, or 'equal' if they are the same value.",
+      "description": "Read two integers a and b separated by whitespace. Output 'less' if a < b, 'greater' if a > b, or 'equal' if they are the same value. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -897,7 +897,7 @@
       "id": "M05",
       "difficulty": "medium",
       "title": "Simple Binary Expression",
-      "description": "Read an expression formatted as 'a op b' with single spaces, where a and b are integers and op is one of '+', '-', or '*'. Evaluate the expression using integer arithmetic and output the result as an integer.",
+      "description": "Read an expression formatted as 'a op b' with single spaces, where a and b are integers and op is one of '+', '-', or '*'. Evaluate the expression using integer arithmetic and output the result as an integer. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -930,7 +930,7 @@
       "id": "M06",
       "difficulty": "medium",
       "title": "Greatest Common Divisor",
-      "description": "Read two integers a and b separated by whitespace. Compute their greatest common divisor as a positive integer and output that value.",
+      "description": "Read two integers a and b separated by whitespace. Compute their greatest common divisor as a positive integer and output that value. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -963,7 +963,7 @@
       "id": "M07",
       "difficulty": "medium",
       "title": "Factorial",
-      "description": "Read an integer N with 0 ≤ N ≤ 10. Compute N! (the factorial) using integer arithmetic and output the result.",
+      "description": "Read a non-negative integer N. Compute N! (the factorial) using integer arithmetic and output the result. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -996,7 +996,7 @@
       "id": "M08",
       "difficulty": "medium",
       "title": "Nth Fibonacci Number",
-      "description": "Read an integer N ≥ 1 and output the Nth Fibonacci number using the 1-indexed sequence with F1 = 1 and F2 = 1. Use arbitrary-precision integers if needed.",
+      "description": "Read an integer N ≥ 1 and output the Nth Fibonacci number using the 1-indexed sequence with F1 = 1 and F2 = 1. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -1029,7 +1029,7 @@
       "id": "M09",
       "difficulty": "medium",
       "title": "Decimal To Binary",
-      "description": "Read a non-negative integer N in decimal. Output its binary representation without leading zeros (except print '0' when N = 0).",
+      "description": "Read a non-negative integer N in decimal. Output its binary representation without leading zeros (except print '0' when N = 0). All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -1062,7 +1062,7 @@
       "id": "M10",
       "difficulty": "medium",
       "title": "Binary To Decimal",
-      "description": "Read a string consisting only of characters '0' and '1'. Interpret it as a binary number and output the corresponding decimal integer without extra text.",
+      "description": "Read a string consisting only of characters '0' and '1'. Interpret it as a binary number and output the corresponding decimal integer without extra text. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -1161,7 +1161,7 @@
       "id": "M13",
       "difficulty": "medium",
       "title": "Sort Numbers",
-      "description": "Read an integer N on the first line followed by a second line containing N integers separated by spaces. Output the integers sorted in ascending order separated by single spaces.",
+      "description": "Read an integer N on the first line followed by a second line containing N integers separated by spaces. Output the integers sorted in ascending order separated by single spaces. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -1194,7 +1194,7 @@
       "id": "M14",
       "difficulty": "medium",
       "title": "Second Largest Distinct Number",
-      "description": "Read an integer N ≥ 2 followed by N integers on the next line. Consider the distinct values and output the second largest distinct value. Inputs are guaranteed to contain at least two distinct numbers.",
+      "description": "Read an integer N ≥ 2 followed by N integers on the next line. Consider the distinct values and output the second largest distinct value. Inputs are guaranteed to contain at least two distinct numbers. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -1326,7 +1326,7 @@
       "id": "M18",
       "difficulty": "medium",
       "title": "Sum Of List",
-      "description": "Read an integer N followed by a line of N integers separated by spaces. Sum the integers exactly and output the total.",
+      "description": "Read an integer N followed by a line of N integers separated by spaces. Sum the integers exactly and output the total. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -1458,7 +1458,7 @@
       "id": "H02",
       "difficulty": "hard",
       "title": "Evaluate Expression With Precedence",
-      "description": "Read a mathematical expression containing positive integers and the operators '+', '-', and '*' with no parentheses. Respect standard precedence (multiplication before addition/subtraction, evaluate left to right within the same precedence) and output the resulting integer.",
+      "description": "Read a mathematical expression containing positive integers and the operators '+', '-', and '*' with no parentheses. Respect standard precedence (multiplication before addition/subtraction, evaluate left to right within the same precedence) and output the resulting integer. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -1491,7 +1491,7 @@
       "id": "H03",
       "difficulty": "hard",
       "title": "Count Primes Up To N",
-      "description": "Read an integer N ≥ 2. Count how many prime numbers are less than or equal to N and output that count as an integer.",
+      "description": "Read an integer N ≥ 2. Count how many prime numbers are less than or equal to N and output that count as an integer. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -1524,7 +1524,7 @@
       "id": "H04",
       "difficulty": "hard",
       "title": "Nth Prime Number",
-      "description": "Read an integer K ≥ 1 and output the Kth prime number in the increasing sequence 2, 3, 5, 7, ... .",
+      "description": "Read an integer K ≥ 1 and output the Kth prime number in the increasing sequence 2, 3, 5, 7, ... . All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -1557,7 +1557,7 @@
       "id": "H05",
       "difficulty": "hard",
       "title": "Big Integer Addition",
-      "description": "Read two non-negative integers A and B given as decimal strings on separate lines (they may be very large). Output the decimal representation of A + B with no leading zeros unless the result is zero.",
+      "description": "Read two non-negative integers A and B given as decimal strings on separate lines (they may be very large, exceeding a 64-bit range — this problem is an intentional exception to the 64-bit convention used elsewhere in this benchmark). Output the decimal representation of A + B with no leading zeros unless the result is zero.",
       
       "input_output_examples": [
         {
@@ -1788,7 +1788,7 @@
       "id": "H12",
       "difficulty": "hard",
       "title": "ASCII Sum",
-      "description": "Read a string S and compute the sum of the ASCII/Unicode code points of all characters. Output the sum as an integer.",
+      "description": "Read a string S and compute the sum of the ASCII/Unicode code points of all characters. Output the sum as an integer. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -1821,7 +1821,7 @@
       "id": "H13",
       "difficulty": "hard",
       "title": "Polynomial Evaluation",
-      "description": "Read an integer n, then a line containing n+1 integer coefficients for a degree-n polynomial starting with the highest-degree term, followed by an integer x on the next line. Evaluate the polynomial at x and output the integer result.",
+      "description": "Read an integer n, then a line containing n+1 integer coefficients for a degree-n polynomial starting with the highest-degree term, followed by an integer x on the next line. Evaluate the polynomial at x and output the integer result. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -1854,7 +1854,7 @@
       "id": "H14",
       "difficulty": "hard",
       "title": "List All Divisors",
-      "description": "Read a positive integer N and output all positive divisors of N in strictly increasing order separated by single spaces.",
+      "description": "Read a positive integer N and output all positive divisors of N in strictly increasing order separated by single spaces. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -1887,7 +1887,7 @@
       "id": "H15",
       "difficulty": "hard",
       "title": "Tape Walk Final Position",
-      "description": "Start with X = 0. Read a string consisting of the characters 'L' and 'R'. For each 'L' decrement X by 1; for each 'R' increment X by 1. After processing the entire string, output the final value of X as an integer.",
+      "description": "Start with X = 0. Read a string consisting of the characters 'L' and 'R'. For each 'L' decrement X by 1; for each 'R' increment X by 1. After processing the entire string, output the final value of X as an integer. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -1953,7 +1953,7 @@
       "id": "H17",
       "difficulty": "hard",
       "title": "Most Frequent Value",
-      "description": "Read an integer N followed by a line containing N integers. Determine which value appears most frequently. Output that value; if multiple values tie, output the smallest such value.",
+      "description": "Read an integer N followed by a line containing N integers. Determine which value appears most frequently. Output that value; if multiple values tie, output the smallest such value. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -1986,7 +1986,7 @@
       "id": "H18",
       "difficulty": "hard",
       "title": "Divisible By 3",
-      "description": "Read a non-negative integer represented as a string of digits. Decide whether the number is divisible by 3 using any method and output 'yes' if divisible, otherwise 'no'.",
+      "description": "Read a non-negative integer represented as a string of digits. Decide whether the number is divisible by 3 using any method and output 'yes' if divisible, otherwise 'no'. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -2019,7 +2019,7 @@
       "id": "H19",
       "difficulty": "hard",
       "title": "Plus Minus Reset Machine",
-      "description": "Initialize X = 0. Read a string consisting of '+', '-', and '0'. For each '+', increment X; for '-', decrement X; for '0', reset X to 0. After processing all characters, output the final integer value of X.",
+      "description": "Initialize X = 0. Read a string consisting of '+', '-', and '0'. For each '+', increment X; for '-', decrement X; for '0', reset X to 0. After processing all characters, output the final integer value of X. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -2085,7 +2085,7 @@
       "id": "X01",
       "difficulty": "extra_hard",
       "title": "Prime Factorization",
-      "description": "Read a positive integer N > 1. Output its prime factorization as space-separated primes in ascending order with repetition. For example, 12 = 2*2*3, so output '2 2 3'.",
+      "description": "Read a positive integer N > 1. Output its prime factorization as space-separated primes in ascending order with repetition. For example, 12 = 2*2*3, so output '2 2 3'. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -2118,7 +2118,7 @@
       "id": "X02",
       "difficulty": "extra_hard",
       "title": "Longest Increasing Subsequence Length",
-      "description": "Read an integer N followed by N integers. Find the length of the longest strictly increasing subsequence (not necessarily contiguous) and output that length.",
+      "description": "Read an integer N followed by N integers. Find the length of the longest strictly increasing subsequence (not necessarily contiguous) and output that length. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -2151,7 +2151,7 @@
       "id": "X03",
       "difficulty": "extra_hard",
       "title": "Matrix Multiplication Result Element",
-      "description": "Read dimensions M, N, P, then an MxN matrix A (M lines, N integers each), then an NxP matrix B (N lines, P integers each), then row index i and column index j (0-based). Output the element at position (i,j) in the product matrix A*B.",
+      "description": "Read dimensions M, N, P, then an MxN matrix A (M lines, N integers each), then an NxP matrix B (N lines, P integers each), then row index i and column index j (0-based). Output the element at position (i,j) in the product matrix A*B. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -2184,7 +2184,7 @@
       "id": "X04",
       "difficulty": "extra_hard",
       "title": "Evaluate Postfix Expression",
-      "description": "Read a postfix (Reverse Polish Notation) expression with single-digit operands and operators +, -, *, / separated by spaces. Evaluate using integer arithmetic (truncate toward zero for division) and output the result.",
+      "description": "Read a postfix (Reverse Polish Notation) expression with single-digit operands and operators +, -, *, / separated by spaces. Evaluate using integer arithmetic (truncate toward zero for division) and output the result. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -2217,7 +2217,7 @@
       "id": "X05",
       "difficulty": "extra_hard",
       "title": "Merge Two Sorted Arrays",
-      "description": "Read two lines, each containing space-separated integers in sorted ascending order. Merge them into a single sorted array and output the result as space-separated integers.",
+      "description": "Read two lines, each containing space-separated integers in sorted ascending order. Merge them into a single sorted array and output the result as space-separated integers. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -2250,7 +2250,7 @@
       "id": "X06",
       "difficulty": "extra_hard",
       "title": "Compute Power Modulo",
-      "description": "Read three integers: base B, exponent E, and modulus M. Compute B^E mod M using efficient modular exponentiation and output the result. Assume E >= 0 and M > 0.",
+      "description": "Read three integers: base B, exponent E, and modulus M. Compute B^E mod M using efficient modular exponentiation and output the result. Assume E >= 0 and M > 0. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -2316,7 +2316,7 @@
       "id": "X08",
       "difficulty": "extra_hard",
       "title": "Count Set Bits In Range",
-      "description": "Read two integers L and R (0 <= L <= R). Count the total number of 1-bits in the binary representations of all integers from L to R inclusive, and output that count.",
+      "description": "Read two integers L and R (0 <= L <= R). Count the total number of 1-bits in the binary representations of all integers from L to R inclusive, and output that count. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -2415,7 +2415,7 @@
       "id": "X11",
       "difficulty": "extra_hard",
       "title": "Count Inversions",
-      "description": "Read an integer N followed by N integers. Count the number of inversions: pairs (i,j) where i < j but arr[i] > arr[j]. Output that count.",
+      "description": "Read an integer N followed by N integers. Count the number of inversions: pairs (i,j) where i < j but arr[i] > arr[j]. Output that count. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -2448,7 +2448,7 @@
       "id": "X12",
       "difficulty": "extra_hard",
       "title": "Least Common Multiple",
-      "description": "Read two positive integers A and B. Compute and output their least common multiple (LCM).",
+      "description": "Read two positive integers A and B. Compute and output their least common multiple (LCM). All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -2514,7 +2514,7 @@
       "id": "X14",
       "difficulty": "extra_hard",
       "title": "Next Greater Element",
-      "description": "Read an integer N followed by N integers. For each element, find the first element to its right that is greater than it. Output N integers where each is the next greater element, or -1 if none exists.",
+      "description": "Read an integer N followed by N integers. For each element, find the first element to its right that is greater than it. Output N integers where each is the next greater element, or -1 if none exists. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -2547,7 +2547,7 @@
       "id": "X15",
       "difficulty": "extra_hard",
       "title": "Spiral Matrix Traversal",
-      "description": "Read integers R and C for rows and columns, then R lines of C integers each representing a matrix. Output all elements in spiral order (clockwise from top-left) as space-separated integers.",
+      "description": "Read integers R and C for rows and columns, then R lines of C integers each representing a matrix. Output all elements in spiral order (clockwise from top-left) as space-separated integers. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -2580,7 +2580,7 @@
       "id": "X16",
       "difficulty": "extra_hard",
       "title": "Hamming Distance",
-      "description": "Read two non-negative integers A and B. Compute the Hamming distance between their binary representations (number of bit positions where they differ) and output that count.",
+      "description": "Read two non-negative integers A and B. Compute the Hamming distance between their binary representations (number of bit positions where they differ) and output that count. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -2679,7 +2679,7 @@
       "id": "X19",
       "difficulty": "extra_hard",
       "title": "Permutation Check",
-      "description": "Read an integer N followed by N integers. Determine if the sequence is a permutation of 1 to N (each number 1 to N appears exactly once). Output 'yes' if it is a valid permutation, 'no' otherwise.",
+      "description": "Read an integer N followed by N integers. Determine if the sequence is a permutation of 1 to N (each number 1 to N appears exactly once). Output 'yes' if it is a valid permutation, 'no' otherwise. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
@@ -2712,7 +2712,7 @@
       "id": "X20",
       "difficulty": "extra_hard",
       "title": "Josephus Problem",
-      "description": "Read integers N and K. N people stand in a circle numbered 1 to N. Starting from person 1, count K people clockwise and eliminate that person. Repeat until one remains. Output the survivor's original number.",
+      "description": "Read integers N and K. N people stand in a circle numbered 1 to N. Starting from person 1, count K people clockwise and eliminate that person. Repeat until one remains. Output the survivor's original number. All integers fit within a signed 64-bit range.",
       
       "input_output_examples": [
         {
