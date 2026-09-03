@@ -34,11 +34,15 @@ Run Codex:
 ./scripts/run-codex E02
 ```
 
+(check if you're logged in with `codex login status` or login with `codex login`)
+
 Run Claude Code:
 
 ```sh
 ./scripts/run-claude E02
 ```
+
+(check if you're logged in with `claude auth status --text` or login with `claude auth login`)
 
 Add `--model MODEL` to select a model.
 For Claude Code, add `--effort LEVEL` to set the reasoning effort.
