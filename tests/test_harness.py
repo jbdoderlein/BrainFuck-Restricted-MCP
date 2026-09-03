@@ -12,6 +12,8 @@ from pathlib import Path
 
 from bf_harness.evaluator import BrainfuckEvaluator, HarnessError
 from bf_harness.launch import (
+    CODEX_MODELS,
+    codex_selection_arguments,
     export_session,
     finalize_state,
     run_client,
@@ -348,6 +350,28 @@ class HarnessTests(unittest.TestCase):
         self.assertEqual(
             config["features"]["code_mode"]["direct_only_tool_namespaces"],
             ["mcp__brainfuck"],
+        )
+
+    def test_help_lists_recommended_codex_models(self) -> None:
+        completed = subprocess.run(
+            [str(PROJECT_ROOT / "scripts" / "run-codex"), "--help"],
+            text=True,
+            capture_output=True,
+            check=True,
+        )
+        for model in CODEX_MODELS:
+            self.assertIn(model, completed.stdout)
+        self.assertIn("Codex reasoning effort", completed.stdout)
+
+    def test_codex_model_and_effort_arguments(self) -> None:
+        self.assertEqual(
+            codex_selection_arguments("gpt-5.6-terra", "high"),
+            [
+                "--model",
+                "gpt-5.6-terra",
+                "--config",
+                'model_reasoning_effort="high"',
+            ],
         )
 
 

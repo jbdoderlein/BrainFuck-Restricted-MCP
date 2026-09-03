@@ -30,12 +30,38 @@ TOOL_NAMES = [
 ]
 
 FINAL_RESULT_GRACE_SECONDS = 5.0
+CODEX_MODELS = ("gpt-5.6-sol", "gpt-5.6-terra", "gpt-5.6-luna")
+REASONING_EFFORTS = ("low", "medium", "high", "xhigh", "max")
 
 
 def parse_args() -> argparse.Namespace:
     project_root = Path(__file__).resolve().parents[1]
+    client_hint = sys.argv[1] if len(sys.argv) > 1 else ""
+    if client_hint == "codex":
+        model_help = f"Select a Codex model. Recommended: {', '.join(CODEX_MODELS)}."
+        effort_help = (
+            "Set the Codex reasoning effort. "
+            f"Valid levels: {', '.join(REASONING_EFFORTS)}."
+        )
+    elif client_hint == "claude":
+        model_help = "Select a Claude model or alias, such as sonnet or opus."
+        effort_help = (
+            "Set the Claude Code reasoning effort. "
+            f"Valid levels: {', '.join(REASONING_EFFORTS)}."
+        )
+    else:
+        model_help = "Select the model."
+        effort_help = f"Set the reasoning effort: {', '.join(REASONING_EFFORTS)}."
     parser = argparse.ArgumentParser(
-        description="Start one restricted Brainfuck evaluation."
+        description="Start one restricted Brainfuck evaluation.",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog=(
+            "Codex examples:\n"
+            "  ./scripts/run-codex E02 --model gpt-5.6-sol --effort medium\n"
+            "  ./scripts/run-codex E02 --model gpt-5.6-terra --effort high"
+            if client_hint == "codex"
+            else None
+        ),
     )
     parser.add_argument("client", choices=["codex", "claude"])
     parser.add_argument("problem")
@@ -55,11 +81,11 @@ def parse_args() -> argparse.Namespace:
         default=project_root / ".sessions",
     )
     parser.add_argument("--interpreter", type=Path, default=project_root / "tritium")
-    parser.add_argument("--model")
+    parser.add_argument("--model", help=model_help)
     parser.add_argument(
         "--effort",
-        choices=["low", "medium", "high", "xhigh", "max"],
-        help="Set the Claude Code reasoning effort.",
+        choices=REASONING_EFFORTS,
+        help=effort_help,
     )
     parser.add_argument("--final-attempts", type=int, default=3)
     parser.add_argument("--time-limit-minutes", type=float, default=30.0)
@@ -156,6 +182,15 @@ def executable_version(executable: str) -> str:
         check=False,
     )
     return (completed.stdout or completed.stderr).strip()
+
+
+def codex_selection_arguments(model: str | None, effort: str | None) -> list[str]:
+    arguments: list[str] = []
+    if model:
+        arguments.extend(["--model", model])
+    if effort:
+        arguments.extend(["--config", f'model_reasoning_effort="{effort}"'])
+    return arguments
 
 
 def isolated_gateway_arguments(gateway_args: list[str]) -> list[str]:
@@ -255,8 +290,6 @@ def prepare_session(
         raise HarnessError("The final-attempt limit must be positive.")
     if arguments.time_limit_minutes <= 0:
         raise HarnessError("The session time limit must be positive.")
-    if arguments.client != "claude" and arguments.effort:
-        raise HarnessError("The --effort option is available only for Claude Code.")
     started_at_epoch = time.time()
     deadline_epoch = started_at_epoch + arguments.time_limit_minutes * 60
     catalog_path = arguments.catalog.resolve()
@@ -333,8 +366,7 @@ def prepare_session(
             "-C",
             str(workspace),
         ]
-        if arguments.model:
-            command.extend(["--model", arguments.model])
+        command.extend(codex_selection_arguments(arguments.model, arguments.effort))
         command.append(prompt)
     else:
         executable = shutil.which("claude")

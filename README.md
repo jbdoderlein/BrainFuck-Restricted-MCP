@@ -45,13 +45,16 @@ Run Claude Code:
 (check if you're logged in with `claude auth status --text` or login with `claude auth login`)
 
 Add `--model MODEL` to select a model.
-For Claude Code, add `--effort LEVEL` to set the reasoning effort.
+Recommended Codex models are `gpt-5.6-sol`, `gpt-5.6-terra`, and `gpt-5.6-luna`.
+Add `--effort LEVEL` to set the Codex or Claude reasoning effort.
 Valid levels are `low`, `medium`, `high`, `xhigh`, and `max`.
 Add `--dry-run` to prepare a session without contacting the model service.
 
 For example:
 
 ```sh
+./scripts/run-codex E02 --model gpt-5.6-sol --effort medium
+
 ./scripts/run-claude E02 --model sonnet --effort high
 ```
 
