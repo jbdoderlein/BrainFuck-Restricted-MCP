@@ -136,6 +136,47 @@ def parse_trace(path: Path, client: str) -> tuple[list[dict[str, Any]], str, dic
     return events, final_result, trace_metadata
 
 
+def submission_history(
+    events: list[dict[str, Any]], artifacts: list[dict[str, str]]
+) -> list[dict[str, Any]]:
+    versions: list[dict[str, Any]] = []
+    for event_number, event in enumerate(events, start=1):
+        arguments = event.get("arguments")
+        if event.get("title") != "Write Text File" or not isinstance(arguments, dict):
+            continue
+        if arguments.get("path") != "submission.bf" or not isinstance(arguments.get("content"), str):
+            continue
+        content = arguments["content"]
+        versions.append(
+            {
+                "version": len(versions) + 1,
+                "event_number": event_number,
+                "source": "Agent write",
+                "content": content,
+                "bytes": len(content.encode("utf-8")),
+            }
+        )
+
+    final_artifact = next(
+        (artifact for artifact in artifacts if artifact["path"] == "submission.bf"),
+        None,
+    )
+    if final_artifact and (
+        not versions or versions[-1]["content"] != final_artifact["content"]
+    ):
+        content = final_artifact["content"]
+        versions.append(
+            {
+                "version": len(versions) + 1,
+                "event_number": None,
+                "source": "Final artifact",
+                "content": content,
+                "bytes": len(content.encode("utf-8")),
+            }
+        )
+    return versions
+
+
 def session_data(session_root: Path) -> dict[str, Any]:
     control = session_root / "control"
     workspace = session_root / "workspace"
@@ -187,6 +228,7 @@ def session_data(session_root: Path) -> dict[str, Any]:
         "usage": usage,
         "result": final_result,
         "artifacts": artifacts,
+        "submission_history": submission_history(events, artifacts),
         "events": events,
         "event_count": len(events),
     }

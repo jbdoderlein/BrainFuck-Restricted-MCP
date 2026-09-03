@@ -1,4 +1,4 @@
-const state = { sessions: [], selectedId: null, client: "all", query: "" };
+const state = { sessions: [], selectedId: null, client: "all", query: "", activeTab: "result" };
 
 const elements = {
   list: document.querySelector("#session-list"),
@@ -106,6 +106,23 @@ function renderDetail() {
   const timeline = session.events.length
     ? session.events.map(eventMarkup).join("")
     : '<div class="no-content">This session has no readable trace events.</div>';
+  const history = session.submission_history || [];
+  const historyMarkup = history.length
+    ? history.map((version) => `
+      <article class="version-card">
+        <header class="version-head">
+          <div>
+            <span class="version-number">Version ${version.version}</span>
+            <span class="version-source">${escapeHtml(version.source)}${version.event_number ? ` · Trace event ${version.event_number}` : ""}</span>
+          </div>
+          <div class="version-actions">
+            <span>${formatNumber(version.bytes)} bytes</span>
+            <button class="copy-button" data-copy-version="${version.version - 1}">Copy</button>
+          </div>
+        </header>
+        <pre class="version-code"><code>${escapeHtml(version.content)}</code></pre>
+      </article>`).join("")
+    : '<div class="no-content">The trace has no recorded submission.bf versions.</div>';
 
   elements.main.innerHTML = `
     <div class="detail">
@@ -133,37 +150,60 @@ function renderDetail() {
         <div class="metric"><dt>Model</dt><dd title="${escapeHtml(session.model)}">${escapeHtml(session.model)}</dd></div>
       </dl>
 
-      <div class="content-grid">
-        <div class="stack">
-          <section class="section">
-            <div class="section-title"><h3>Final result</h3>${session.result ? '<button class="copy-button" data-copy-result>Copy</button>' : ""}</div>
-            ${result}
-          </section>
-          <section class="section">
-            <div class="section-title"><h3>Agent trace</h3><span class="count">${session.event_count} events</span></div>
-            <div class="timeline">${timeline}</div>
-          </section>
-        </div>
-        <aside class="stack">
-          <section class="section">
-            <div class="section-title"><h3>Artifacts</h3><span class="count">${session.artifacts.length} files</span></div>
-            ${artifacts}
-          </section>
-          <section class="section">
-            <div class="section-title"><h3>Token use</h3></div>
-            <dl class="metrics" style="grid-template-columns: 1fr 1fr; margin: 0">
-              <div class="metric"><dt>Input</dt><dd>${formatNumber(inputTokens)}</dd></div>
-              <div class="metric"><dt>Output</dt><dd>${formatNumber(outputTokens)}</dd></div>
-            </dl>
-          </section>
-        </aside>
+      <div class="tabs" role="tablist" aria-label="Session details">
+        <button class="tab ${state.activeTab === "result" ? "active" : ""}" role="tab" aria-selected="${state.activeTab === "result"}" data-tab="result">Result</button>
+        <button class="tab ${state.activeTab === "trace" ? "active" : ""}" role="tab" aria-selected="${state.activeTab === "trace"}" data-tab="trace">Agent trace <span>${session.event_count}</span></button>
+        <button class="tab ${state.activeTab === "history" ? "active" : ""}" role="tab" aria-selected="${state.activeTab === "history"}" data-tab="history">submission.bf history <span>${history.length}</span></button>
       </div>
+
+      <section class="tab-panel ${state.activeTab === "result" ? "active" : ""}" data-panel="result">
+        <div class="content-grid">
+          <div class="stack">
+            <section class="section">
+              <div class="section-title"><h3>Final result</h3>${session.result ? '<button class="copy-button" data-copy-result>Copy</button>' : ""}</div>
+              ${result}
+            </section>
+          </div>
+          <aside class="stack">
+            <section class="section">
+              <div class="section-title"><h3>Artifacts</h3><span class="count">${session.artifacts.length} files</span></div>
+              ${artifacts}
+            </section>
+            <section class="section">
+              <div class="section-title"><h3>Token use</h3></div>
+              <dl class="metrics" style="grid-template-columns: 1fr 1fr; margin: 0">
+                <div class="metric"><dt>Input</dt><dd>${formatNumber(inputTokens)}</dd></div>
+                <div class="metric"><dt>Output</dt><dd>${formatNumber(outputTokens)}</dd></div>
+              </dl>
+            </section>
+          </aside>
+        </div>
+      </section>
+
+      <section class="tab-panel ${state.activeTab === "trace" ? "active" : ""}" data-panel="trace">
+        <div class="section-title"><h3>Agent trace</h3><span class="count">${session.event_count} events</span></div>
+        <div class="timeline">${timeline}</div>
+      </section>
+
+      <section class="tab-panel ${state.activeTab === "history" ? "active" : ""}" data-panel="history">
+        <div class="section-title"><h3>submission.bf chronology</h3><span class="count">${history.length} versions</span></div>
+        <div class="version-list">${historyMarkup}</div>
+      </section>
     </div>`;
 
   document.querySelector("#refresh").addEventListener("click", loadSessions);
+  document.querySelectorAll("[data-tab]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.activeTab = button.dataset.tab;
+      renderDetail();
+    });
+  });
   document.querySelector("[data-copy-result]")?.addEventListener("click", () => copyText(session.result));
   document.querySelectorAll("[data-copy-artifact]").forEach((button) => {
     button.addEventListener("click", () => copyText(session.artifacts[Number(button.dataset.copyArtifact)].content));
+  });
+  document.querySelectorAll("[data-copy-version]").forEach((button) => {
+    button.addEventListener("click", () => copyText(history[Number(button.dataset.copyVersion)].content));
   });
 }
 
