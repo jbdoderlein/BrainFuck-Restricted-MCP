@@ -18,6 +18,11 @@ const escapeHtml = (value = "") => String(value)
 const statusClass = (status) => status === "passed" ? "passed" : status === "active" ? "active" : "failed";
 const prettyStatus = (status) => String(status || "unknown").replaceAll("_", " ");
 const formatNumber = (value) => typeof value === "number" ? new Intl.NumberFormat().format(value) : "—";
+const formatCost = (value) => {
+  if (typeof value !== "number") return "Not available";
+  const digits = value < 0.01 ? 5 : value < 1 ? 3 : 2;
+  return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", minimumFractionDigits: digits, maximumFractionDigits: digits }).format(value);
+};
 const formatDuration = (seconds) => {
   if (typeof seconds !== "number") return "—";
   if (seconds < 60) return `${seconds.toFixed(seconds < 10 ? 1 : 0)} s`;
@@ -92,6 +97,9 @@ function renderDetail() {
   const usage = session.usage || {};
   const inputTokens = usage.input_tokens;
   const outputTokens = usage.output_tokens;
+  const cachedTokens = usage.cached_input_tokens ?? usage.cache_read_input_tokens;
+  const cacheWriteTokens = usage.cache_creation_input_tokens;
+  const apiCost = session.api_cost || { available: false };
   const attempts = session.final_attempts_used == null ? "—" : `${session.final_attempts_used} / ${session.max_final_attempts ?? "—"}`;
   const result = session.result
     ? `<div class="result-card"><pre id="result-text">${escapeHtml(session.result)}</pre></div>`
@@ -147,7 +155,7 @@ function renderDetail() {
         <div class="metric"><dt>Status</dt><dd class="status-text ${statusClass(session.status)}">${escapeHtml(prettyStatus(session.status))}</dd></div>
         <div class="metric"><dt>Duration</dt><dd>${escapeHtml(formatDuration(session.duration_seconds))}</dd></div>
         <div class="metric"><dt>Final attempts</dt><dd>${escapeHtml(attempts)}</dd></div>
-        <div class="metric"><dt>Model</dt><dd title="${escapeHtml(session.model)}">${escapeHtml(session.model)}</dd></div>
+        <div class="metric"><dt>Model${session.model_is_inferred ? " · inferred" : ""}</dt><dd title="${escapeHtml(session.model)}">${escapeHtml(session.model)}</dd></div>
       </dl>
 
       <div class="tabs" role="tablist" aria-label="Session details">
@@ -170,11 +178,19 @@ function renderDetail() {
               ${artifacts}
             </section>
             <section class="section">
-              <div class="section-title"><h3>Token use</h3></div>
-              <dl class="metrics" style="grid-template-columns: 1fr 1fr; margin: 0">
+              <div class="section-title"><h3>Token use${session.usage_is_estimate ? " · partial estimate" : ""}</h3></div>
+              <dl class="metrics token-metrics" style="margin: 0">
                 <div class="metric"><dt>Input</dt><dd>${formatNumber(inputTokens)}</dd></div>
+                <div class="metric"><dt>Cache read</dt><dd>${formatNumber(cachedTokens)}</dd></div>
+                <div class="metric"><dt>Cache write</dt><dd>${formatNumber(cacheWriteTokens)}</dd></div>
                 <div class="metric"><dt>Output</dt><dd>${formatNumber(outputTokens)}</dd></div>
               </dl>
+              <div class="cost-card">
+                <div><span>Estimated API cost</span><strong>${apiCost.available ? formatCost(apiCost.amount_usd) : "Not available"}</strong></div>
+                ${apiCost.available
+                  ? `<p>Standard API equivalent for ${escapeHtml(apiCost.pricing_model)}${session.model_is_inferred ? ", inferred from the Codex default" : ""}. This is not a subscription charge. <a href="${escapeHtml(apiCost.source)}" target="_blank" rel="noreferrer">Prices checked ${escapeHtml(apiCost.pricing_date)}</a>.</p>`
+                  : `<p>${escapeHtml(apiCost.reason || "The model or token usage is not available.")}</p>`}
+              </div>
             </section>
           </aside>
         </div>

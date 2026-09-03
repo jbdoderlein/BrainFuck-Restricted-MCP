@@ -118,7 +118,10 @@ Start the local session viewer:
 
 Open `http://127.0.0.1:8765` in a browser.
 The page reads the `.sessions/` directory each time you refresh it.
-It shows results, artifacts, token use, and a readable agent trace.
+It shows results, artifacts, token use, estimated API cost, and a readable trace.
+The cost uses standard API prices that were checked on September 3, 2026.
+The cost is an API equivalent. It is not the actual subscription charge.
+The page marks token use as partial when a budget stop interrupts the final usage event.
 
 ## Add problems
 

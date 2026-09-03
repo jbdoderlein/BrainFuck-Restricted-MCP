@@ -13,6 +13,32 @@ from urllib.parse import unquote, urlparse
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 STATIC_ROOT = PROJECT_ROOT / "viewer"
 
+OPENAI_PRICING_URL = "https://platform.openai.com/docs/pricing"
+ANTHROPIC_PRICING_URL = "https://platform.claude.com/docs/en/about-claude/pricing"
+PRICING_DATE = "2026-09-03"
+
+# Prices are USD per one million tokens for standard API processing.
+MODEL_PRICES: dict[str, dict[str, float | str]] = {
+    "gpt-5.6-sol": {"input": 4, "cached": 0.4, "output": 20, "source": OPENAI_PRICING_URL},
+    "gpt-5.6-terra": {"input": 2, "cached": 0.2, "output": 12, "source": OPENAI_PRICING_URL},
+    "gpt-5.6-luna": {"input": 0.2, "cached": 0.02, "output": 1.2, "source": OPENAI_PRICING_URL},
+    "gpt-5.5": {"input": 5, "cached": 0.5, "output": 30, "source": OPENAI_PRICING_URL},
+    "gpt-5.4": {"input": 2.5, "cached": 0.25, "output": 15, "source": OPENAI_PRICING_URL},
+    "gpt-5.3-codex": {"input": 1.75, "cached": 0.175, "output": 14, "source": OPENAI_PRICING_URL},
+    "gpt-5.2": {"input": 1.75, "cached": 0.175, "output": 14, "source": OPENAI_PRICING_URL},
+    "gpt-5.1": {"input": 1.25, "cached": 0.125, "output": 10, "source": OPENAI_PRICING_URL},
+    "gpt-5": {"input": 1.25, "cached": 0.125, "output": 10, "source": OPENAI_PRICING_URL},
+    "claude-opus-5": {"input": 5, "cached": 0.5, "cache_write_5m": 6.25, "cache_write_1h": 10, "output": 25, "source": ANTHROPIC_PRICING_URL},
+    "claude-opus-4.8": {"input": 5, "cached": 0.5, "cache_write_5m": 6.25, "cache_write_1h": 10, "output": 25, "source": ANTHROPIC_PRICING_URL},
+    "claude-opus-4.7": {"input": 5, "cached": 0.5, "cache_write_5m": 6.25, "cache_write_1h": 10, "output": 25, "source": ANTHROPIC_PRICING_URL},
+    "claude-opus-4.6": {"input": 5, "cached": 0.5, "cache_write_5m": 6.25, "cache_write_1h": 10, "output": 25, "source": ANTHROPIC_PRICING_URL},
+    "claude-opus-4.5": {"input": 5, "cached": 0.5, "cache_write_5m": 6.25, "cache_write_1h": 10, "output": 25, "source": ANTHROPIC_PRICING_URL},
+    "claude-sonnet-5": {"input": 2, "cached": 0.2, "cache_write_5m": 2.5, "cache_write_1h": 4, "output": 10, "source": ANTHROPIC_PRICING_URL},
+    "claude-sonnet-4.6": {"input": 3, "cached": 0.3, "cache_write_5m": 3.75, "cache_write_1h": 6, "output": 15, "source": ANTHROPIC_PRICING_URL},
+    "claude-sonnet-4.5": {"input": 3, "cached": 0.3, "cache_write_5m": 3.75, "cache_write_1h": 6, "output": 15, "source": ANTHROPIC_PRICING_URL},
+    "claude-haiku-4.5": {"input": 1, "cached": 0.1, "cache_write_5m": 1.25, "cache_write_1h": 2, "output": 5, "source": ANTHROPIC_PRICING_URL},
+}
+
 
 def read_json(path: Path) -> dict[str, Any]:
     try:
@@ -48,11 +74,106 @@ def readable_tool_name(name: str) -> str:
     return name.removeprefix("mcp__brainfuck__").replace("_", " ").title()
 
 
+def aggregate_usage(messages: dict[str, dict[str, Any]]) -> dict[str, Any]:
+    keys = (
+        "input_tokens",
+        "cached_input_tokens",
+        "cache_creation_input_tokens",
+        "cache_read_input_tokens",
+        "output_tokens",
+        "reasoning_output_tokens",
+    )
+    total = {key: 0 for key in keys}
+    cache_creation = {
+        "ephemeral_5m_input_tokens": 0,
+        "ephemeral_1h_input_tokens": 0,
+    }
+    for usage in messages.values():
+        for key in keys:
+            value = usage.get(key)
+            if isinstance(value, (int, float)):
+                total[key] += value
+        estimated_output = usage.get("_estimated_output_tokens")
+        if isinstance(estimated_output, (int, float)):
+            total["output_tokens"] += max(0, estimated_output - float(usage.get("output_tokens") or 0))
+        breakdown = usage.get("cache_creation")
+        if isinstance(breakdown, dict):
+            for key in cache_creation:
+                value = breakdown.get(key)
+                if isinstance(value, (int, float)):
+                    cache_creation[key] += value
+    if any(cache_creation.values()):
+        total["cache_creation"] = cache_creation
+    return {key: value for key, value in total.items() if value}
+
+
+def normalized_model(model: str) -> str:
+    return model.lower().split("[", 1)[0].strip()
+
+
+def price_for_model(model: str) -> tuple[str, dict[str, float | str]] | None:
+    normalized = normalized_model(model)
+    for name in sorted(MODEL_PRICES, key=len, reverse=True):
+        if normalized == name or normalized.startswith(f"{name}-"):
+            return name, MODEL_PRICES[name]
+    return None
+
+
+def resolve_model(
+    client: str, launch: dict[str, Any], trace_metadata: dict[str, Any]
+) -> tuple[str, bool]:
+    trace_model = trace_metadata.get("model")
+    launch_model = launch.get("model")
+    if isinstance(trace_model, str) and trace_model:
+        return trace_model, False
+    if isinstance(launch_model, str) and launch_model:
+        return launch_model, False
+    if client == "codex":
+        return "gpt-5.6-sol", True
+    return "Default", False
+
+
+def estimate_api_cost(model: str, usage: dict[str, Any]) -> dict[str, Any]:
+    match = price_for_model(model)
+    if match is None or not usage:
+        return {"available": False, "reason": "The model or token usage is not available."}
+    pricing_model, prices = match
+    input_tokens = float(usage.get("input_tokens") or 0)
+    cached_tokens = float(usage.get("cached_input_tokens") or usage.get("cache_read_input_tokens") or 0)
+    if usage.get("cached_input_tokens"):
+        input_tokens = max(0, input_tokens - cached_tokens)
+    output_tokens = float(usage.get("output_tokens") or 0)
+    cache_write_tokens = float(usage.get("cache_creation_input_tokens") or 0)
+    cache_breakdown = usage.get("cache_creation")
+    cache_write_5m = cache_write_tokens
+    cache_write_1h = 0.0
+    if isinstance(cache_breakdown, dict):
+        cache_write_5m = float(cache_breakdown.get("ephemeral_5m_input_tokens") or 0)
+        cache_write_1h = float(cache_breakdown.get("ephemeral_1h_input_tokens") or 0)
+        remaining = max(0, cache_write_tokens - cache_write_5m - cache_write_1h)
+        cache_write_5m += remaining
+
+    cost = input_tokens * float(prices["input"])
+    cost += cached_tokens * float(prices.get("cached", prices["input"]))
+    cost += output_tokens * float(prices["output"])
+    cost += cache_write_5m * float(prices.get("cache_write_5m", prices["input"]))
+    cost += cache_write_1h * float(prices.get("cache_write_1h", prices["input"]))
+    return {
+        "available": True,
+        "amount_usd": cost / 1_000_000,
+        "pricing_model": pricing_model,
+        "pricing_date": PRICING_DATE,
+        "source": prices["source"],
+    }
+
+
 def parse_trace(path: Path, client: str) -> tuple[list[dict[str, Any]], str, dict[str, Any]]:
     events: list[dict[str, Any]] = []
     final_result = ""
     trace_metadata: dict[str, Any] = {}
     tool_names: dict[str, str] = {}
+    claude_messages: dict[str, dict[str, Any]] = {}
+    current_claude_message = ""
 
     for raw_line in read_text(path).splitlines():
         try:
@@ -90,8 +211,29 @@ def parse_trace(path: Path, client: str) -> tuple[list[dict[str, Any]], str, dic
         if event_type == "system" and event.get("subtype") == "init":
             trace_metadata["model"] = event.get("model")
             trace_metadata["client_version"] = event.get("claude_code_version")
+        elif event_type == "system" and event.get("subtype") == "thinking_tokens":
+            estimate = event.get("estimated_tokens")
+            if current_claude_message and isinstance(estimate, (int, float)):
+                claude_messages.setdefault(current_claude_message, {})[
+                    "_estimated_output_tokens"
+                ] = estimate
+        elif event_type == "stream_event" and isinstance(event.get("event"), dict):
+            stream_event = event["event"]
+            if stream_event.get("type") == "message_start" and isinstance(stream_event.get("message"), dict):
+                message = stream_event["message"]
+                message_id = str(message.get("id") or event.get("uuid") or "")
+                current_claude_message = message_id
+                if isinstance(message.get("usage"), dict):
+                    claude_messages[message_id] = dict(message["usage"])
         elif event_type == "assistant" and isinstance(event.get("message"), dict):
             message = event["message"]
+            message_id = str(message.get("id") or event.get("uuid") or "")
+            current_claude_message = message_id
+            if isinstance(message.get("usage"), dict):
+                previous_estimate = claude_messages.get(message_id, {}).get("_estimated_output_tokens")
+                claude_messages[message_id] = dict(message["usage"])
+                if previous_estimate is not None:
+                    claude_messages[message_id]["_estimated_output_tokens"] = previous_estimate
             for block in message.get("content", []):
                 if not isinstance(block, dict):
                     continue
@@ -132,6 +274,10 @@ def parse_trace(path: Path, client: str) -> tuple[list[dict[str, Any]], str, dic
                 final_result = event["result"]
             if isinstance(event.get("usage"), dict):
                 trace_metadata["usage"] = event["usage"]
+
+    if client == "claude" and not trace_metadata.get("usage") and claude_messages:
+        trace_metadata["usage"] = aggregate_usage(claude_messages)
+        trace_metadata["usage_is_estimate"] = True
 
     return events, final_result, trace_metadata
 
@@ -197,8 +343,13 @@ def session_data(session_root: Path) -> dict[str, Any]:
     status = state.get("end_reason") or result.get("termination_reason") or "active"
     reported_usage = result.get("reported_usage") or manifest.get("reported_usage") or {}
     usage = reported_usage.get("usage") if isinstance(reported_usage, dict) else {}
+    usage_is_estimate = False
     if not isinstance(usage, dict) or not usage:
         usage = trace_metadata.get("usage", {})
+        usage_is_estimate = bool(trace_metadata.get("usage_is_estimate"))
+
+    model, model_is_inferred = resolve_model(client, launch, trace_metadata)
+    api_cost = estimate_api_cost(str(model), usage)
 
     artifacts: list[dict[str, str]] = []
     artifact_root = workspace / "artifacts"
@@ -216,7 +367,8 @@ def session_data(session_root: Path) -> dict[str, Any]:
         "id": session_root.name,
         "client": client,
         "client_version": launch.get("client_version") or trace_metadata.get("client_version"),
-        "model": launch.get("model") or trace_metadata.get("model") or "Default",
+        "model": model,
+        "model_is_inferred": model_is_inferred,
         "problem_id": launch.get("problem") or problem.get("id") or "Unknown",
         "problem_title": problem.get("title") or "Untitled problem",
         "problem_description": problem.get("description") or "",
@@ -226,6 +378,8 @@ def session_data(session_root: Path) -> dict[str, Any]:
         "final_attempts_used": state.get("final_attempts_used"),
         "max_final_attempts": state.get("max_final_attempts") or launch.get("max_final_attempts"),
         "usage": usage,
+        "usage_is_estimate": usage_is_estimate,
+        "api_cost": api_cost,
         "result": final_result,
         "artifacts": artifacts,
         "submission_history": submission_history(events, artifacts),
