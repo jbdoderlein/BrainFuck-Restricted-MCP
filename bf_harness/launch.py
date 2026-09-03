@@ -42,12 +42,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--catalog",
         type=Path,
-        default=project_root / "data" / "problems.example.json",
+        default=project_root / "data" / "problems.json",
     )
     parser.add_argument(
         "--tests-root",
         type=Path,
-        default=project_root / "data" / "tests.example",
+        default=project_root / "data" / "tests",
     )
     parser.add_argument(
         "--sessions-root",
