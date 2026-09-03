@@ -12,6 +12,10 @@
     {
       "input": "5",
       "output": "no"
+    },
+    {
+      "input": "0",
+      "output": "yes"
     }
   ]
 }
