@@ -1,0 +1,47 @@
+#!/bin/sh
+set -eu
+
+SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+
+usage() {
+    echo "Usage: $0 <codex|claude> <problem> [problem ...] [extra run-CLIENT arguments...]" >&2
+    echo "Example: $0 codex E01 E02 E03 --model gpt-5.6-sol --effort medium" >&2
+    echo "A leading -- before the extra arguments is optional and accepted for clarity." >&2
+    exit 1
+}
+
+[ $# -ge 2 ] || usage
+
+CLIENT=$1
+shift
+
+case "$CLIENT" in
+    codex|claude) ;;
+    *) usage ;;
+esac
+
+PROBLEMS=""
+while [ $# -gt 0 ]; do
+    case "$1" in
+        --)
+            shift
+            break
+            ;;
+        -*)
+            break
+            ;;
+        *)
+            PROBLEMS="$PROBLEMS $1"
+            shift
+            ;;
+    esac
+done
+
+[ -n "$PROBLEMS" ] || usage
+
+RUNNER="$SCRIPT_DIR/run-$CLIENT"
+
+for PROBLEM in $PROBLEMS; do
+    echo "=== $PROBLEM ==="
+    "$RUNNER" "$PROBLEM" "$@"
+done
