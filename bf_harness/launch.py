@@ -18,7 +18,7 @@ from typing import Any
 if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from bf_harness.evaluator import HarnessError, load_catalog
+from bf_harness.evaluator import FIXED_RUNTIME_CONTRACT, HarnessError, load_catalog
 
 
 TOOL_NAMES = [
@@ -96,7 +96,9 @@ def parse_args() -> argparse.Namespace:
 def agent_prompt(
     problem: dict[str, Any], *, final_attempts: int, time_limit_minutes: float
 ) -> str:
-    public_problem = json.dumps(problem, ensure_ascii=False, indent=2)
+    public_problem = dict(problem)
+    public_problem["runtime"] = {**FIXED_RUNTIME_CONTRACT, **problem.get("runtime", {})}
+    public_problem_json = json.dumps(public_problem, ensure_ascii=False, indent=2)
     return f"""You must solve one programming problem in Brainfuck.
 
 You can write any UTF-8 text file in the artifact directory.
@@ -124,8 +126,16 @@ The session ends after a pass, the last attempt, or the time limit.
 
 Do not submit before the development tests pass.
 
+The problem's runtime block below is the exact interpreter contract, not a suggestion.
+Cells are 8-bit and wrap silently on overflow (256 becomes 0, no error).
+Reading input at end of file yields 0, not -1 and not an unchanged cell.
+Moving the tape pointer below position 0 is a runtime error, not wraparound.
+Standard input is exactly the given text with no trailing newline appended.
+Expected output is compared byte for byte, so do not emit a trailing newline or trailing separator unless the expected output shows one.
+Test input and output are ASCII text unless a problem says otherwise.
+
 Problem:
-{public_problem}
+{public_problem_json}
 """
 
 

@@ -17,6 +17,16 @@ class HarnessError(RuntimeError):
     """A safe error that the MCP server can return to the agent."""
 
 
+FIXED_RUNTIME_CONTRACT: dict[str, Any] = {
+    "cell_bits": 8,
+    "cell_overflow": "wrap",
+    "negative_tape": "error",
+    "eof_value": 0,
+    "encoding": "utf-8",
+    "input_has_implicit_newline": False,
+}
+
+
 @dataclass(frozen=True)
 class RuntimeLimits:
     timeout_seconds: float
@@ -111,14 +121,7 @@ class BrainfuckEvaluator:
             raise HarnessError("The session deadline is invalid.")
 
         runtime = problem.get("runtime", {})
-        fixed_contract = {
-            "cell_bits": 8,
-            "cell_overflow": "wrap",
-            "negative_tape": "error",
-            "eof_value": 0,
-            "encoding": "utf-8",
-            "input_has_implicit_newline": False,
-        }
+        fixed_contract = FIXED_RUNTIME_CONTRACT
         for key, expected in fixed_contract.items():
             if runtime.get(key, expected) != expected:
                 raise HarnessError(f"The runtime value for {key} is not supported.")

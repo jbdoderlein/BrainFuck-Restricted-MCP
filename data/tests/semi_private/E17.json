@@ -8,10 +8,6 @@
     {
       "input": "  spaced out  ",
       "output": "  SPACED OUT  "
-    },
-    {
-      "input": "café",
-      "output": "CAFÉ"
     }
   ]
 }
