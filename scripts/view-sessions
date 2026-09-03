@@ -1,0 +1,4 @@
+#!/bin/sh
+set -eu
+project_root=$(CDPATH= cd -- "$(dirname -- "$0")/.." && pwd)
+exec python3 -m bf_harness.viewer --sessions-root "$project_root/.sessions" "$@"

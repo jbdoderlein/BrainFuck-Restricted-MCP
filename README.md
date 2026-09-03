@@ -108,6 +108,18 @@ The ZIP file contains these records:
 The ZIP file does not contain credentials, generated client configuration,
 or private test files.
 
+## View sessions
+
+Start the local session viewer:
+
+```sh
+./scripts/view-sessions
+```
+
+Open `http://127.0.0.1:8765` in a browser.
+The page reads the `.sessions/` directory each time you refresh it.
+It shows results, artifacts, token use, and a readable agent trace.
+
 ## Add problems
 
 Copy `data/problems.example.json` to a private problem catalog.

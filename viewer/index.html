@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Review evaluation results and agent traces.">
+    <title>Agent Session Viewer</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div class="shell">
+      <aside class="sidebar">
+        <header class="brand">
+          <div class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div>
+            <p class="eyebrow">Evaluation harness</p>
+            <h1>Agent sessions</h1>
+          </div>
+        </header>
+
+        <div class="controls">
+          <label class="search">
+            <span class="sr-only">Search sessions</span>
+            <svg aria-hidden="true" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"></circle><path d="m20 20-4-4"></path></svg>
+            <input id="search" type="search" placeholder="Search sessions">
+          </label>
+          <div class="filters" role="group" aria-label="Filter by agent">
+            <button class="filter active" data-client="all">All</button>
+            <button class="filter" data-client="codex">Codex</button>
+            <button class="filter" data-client="claude">Claude</button>
+          </div>
+        </div>
+
+        <div class="session-count" id="session-count">Loading sessions…</div>
+        <nav class="session-list" id="session-list" aria-label="Sessions"></nav>
+      </aside>
+
+      <main class="main" id="main">
+        <div class="loading-state">Reading session data…</div>
+      </main>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
