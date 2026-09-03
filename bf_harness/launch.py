@@ -122,6 +122,8 @@ Call submit_solution only when the solution is ready.
 Each call uses one final attempt and runs the private tests.
 A private failure does not reveal the test data.
 You can continue after a failed attempt if an attempt remains.
+After a failed submit_solution call, use get_budget_status before deciding what to do next.
+Check how many final attempts and how much time remain, then plan accordingly.
 The session ends after a pass, the last attempt, or the time limit.
 
 Do not submit before the development tests pass.
