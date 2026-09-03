@@ -1,0 +1,17 @@
+{
+  "problem_id": "M18",
+  "tests": [
+    {
+      "input": "2\n-5 5",
+      "output": "0"
+    },
+    {
+      "input": "4\n-10 20 -30 40",
+      "output": "20"
+    },
+    {
+      "input": "6\n1 1 1 1 1 1",
+      "output": "6"
+    }
+  ]
+}

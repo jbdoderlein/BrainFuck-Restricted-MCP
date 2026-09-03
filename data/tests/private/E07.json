@@ -1,0 +1,17 @@
+{
+  "problem_id": "E07",
+  "tests": [
+    {
+      "input": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "output": "40"
+    },
+    {
+      "input": "tab\there",
+      "output": "8"
+    },
+    {
+      "input": "1234567890",
+      "output": "10"
+    }
+  ]
+}

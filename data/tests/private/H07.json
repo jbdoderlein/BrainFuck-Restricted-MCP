@@ -1,0 +1,17 @@
+{
+  "problem_id": "H07",
+  "tests": [
+    {
+      "input": "4\nprefixaaa\nprefixbbb\nprefixccc\nprefixddd",
+      "output": "prefix"
+    },
+    {
+      "input": "2\nab\nab",
+      "output": "ab"
+    },
+    {
+      "input": "3\nxy\nxyz\nx",
+      "output": "x"
+    }
+  ]
+}

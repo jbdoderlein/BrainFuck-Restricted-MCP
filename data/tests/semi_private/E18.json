@@ -1,0 +1,17 @@
+{
+  "problem_id": "E18",
+  "tests": [
+    {
+      "input": "",
+      "output": "0"
+    },
+    {
+      "input": "no spaces here at all",
+      "output": "4"
+    },
+    {
+      "input": " ",
+      "output": "1"
+    }
+  ]
+}

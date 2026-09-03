@@ -1,0 +1,17 @@
+{
+  "problem_id": "E17",
+  "tests": [
+    {
+      "input": "zZzZ",
+      "output": "ZZZZ"
+    },
+    {
+      "input": "123",
+      "output": "123"
+    },
+    {
+      "input": "PascalCase",
+      "output": "PASCALCASE"
+    }
+  ]
+}

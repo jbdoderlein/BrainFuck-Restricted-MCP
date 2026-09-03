@@ -1,0 +1,17 @@
+{
+  "problem_id": "M19",
+  "tests": [
+    {
+      "input": "1234567890abcdef",
+      "output": "13579ace"
+    },
+    {
+      "input": "ab",
+      "output": "a"
+    },
+    {
+      "input": "abcdefghi",
+      "output": "acegi"
+    }
+  ]
+}

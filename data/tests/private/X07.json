@@ -1,0 +1,17 @@
+{
+  "problem_id": "X07",
+  "tests": [
+    {
+      "input": "z",
+      "output": "1"
+    },
+    {
+      "input": "aaaaaa",
+      "output": "6"
+    },
+    {
+      "input": "abacdfgdcaba",
+      "output": "3"
+    }
+  ]
+}

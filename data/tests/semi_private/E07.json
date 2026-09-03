@@ -1,0 +1,17 @@
+{
+  "problem_id": "E07",
+  "tests": [
+    {
+      "input": "ab cd ef",
+      "output": "8"
+    },
+    {
+      "input": "  ",
+      "output": "2"
+    },
+    {
+      "input": ".",
+      "output": "1"
+    }
+  ]
+}

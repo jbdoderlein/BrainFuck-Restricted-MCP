@@ -1,0 +1,17 @@
+{
+  "problem_id": "M01",
+  "tests": [
+    {
+      "input": "",
+      "output": "yes"
+    },
+    {
+      "input": "aa",
+      "output": "yes"
+    },
+    {
+      "input": "abcba",
+      "output": "yes"
+    }
+  ]
+}

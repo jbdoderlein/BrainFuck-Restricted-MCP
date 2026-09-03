@@ -1,0 +1,17 @@
+{
+  "problem_id": "H15",
+  "tests": [
+    {
+      "input": "",
+      "output": "0"
+    },
+    {
+      "input": "R",
+      "output": "1"
+    },
+    {
+      "input": "L",
+      "output": "-1"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "problem_id": "H06",
+  "tests": [
+    {
+      "input": "equal length words",
+      "output": "length"
+    },
+    {
+      "input": "single",
+      "output": "single"
+    },
+    {
+      "input": "a bb ccc dddd",
+      "output": "dddd"
+    }
+  ]
+}

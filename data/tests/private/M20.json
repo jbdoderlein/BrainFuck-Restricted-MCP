@@ -1,0 +1,17 @@
+{
+  "problem_id": "M20",
+  "tests": [
+    {
+      "input": "aAbBcC",
+      "output": "6"
+    },
+    {
+      "input": "The quick brown fox",
+      "output": "16"
+    },
+    {
+      "input": "!!!???",
+      "output": "2"
+    }
+  ]
+}

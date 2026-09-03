@@ -1,0 +1,17 @@
+{
+  "problem_id": "H04",
+  "tests": [
+    {
+      "input": "4",
+      "output": "7"
+    },
+    {
+      "input": "6",
+      "output": "13"
+    },
+    {
+      "input": "100",
+      "output": "541"
+    }
+  ]
+}

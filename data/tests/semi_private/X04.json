@@ -1,0 +1,17 @@
+{
+  "problem_id": "X04",
+  "tests": [
+    {
+      "input": "4 2 -",
+      "output": "2"
+    },
+    {
+      "input": "8 4 /",
+      "output": "2"
+    },
+    {
+      "input": "6 2 3 * -",
+      "output": "0"
+    }
+  ]
+}

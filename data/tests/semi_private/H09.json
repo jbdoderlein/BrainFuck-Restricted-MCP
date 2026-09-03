@@ -1,0 +1,17 @@
+{
+  "problem_id": "H09",
+  "tests": [
+    {
+      "input": "25\nabc",
+      "output": "zab"
+    },
+    {
+      "input": "-25\nabc",
+      "output": "bcd"
+    },
+    {
+      "input": "27\nz",
+      "output": "a"
+    }
+  ]
+}

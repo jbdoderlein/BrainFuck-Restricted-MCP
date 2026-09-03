@@ -1,0 +1,17 @@
+{
+  "problem_id": "X08",
+  "tests": [
+    {
+      "input": "0 1000",
+      "output": "4938"
+    },
+    {
+      "input": "100 100",
+      "output": "3"
+    },
+    {
+      "input": "31 31",
+      "output": "5"
+    }
+  ]
+}

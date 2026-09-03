@@ -1,0 +1,17 @@
+{
+  "problem_id": "X05",
+  "tests": [
+    {
+      "input": "\n1 2 3",
+      "output": "1 2 3"
+    },
+    {
+      "input": "1 2 3\n",
+      "output": "1 2 3"
+    },
+    {
+      "input": "0\n0",
+      "output": "0 0"
+    }
+  ]
+}

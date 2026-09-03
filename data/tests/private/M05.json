@@ -1,0 +1,17 @@
+{
+  "problem_id": "M05",
+  "tests": [
+    {
+      "input": "20 - 30",
+      "output": "-10"
+    },
+    {
+      "input": "7 * 7",
+      "output": "49"
+    },
+    {
+      "input": "1000 + 1",
+      "output": "1001"
+    }
+  ]
+}

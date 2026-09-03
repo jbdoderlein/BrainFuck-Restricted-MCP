@@ -1,0 +1,17 @@
+{
+  "problem_id": "H11",
+  "tests": [
+    {
+      "input": "a1",
+      "output": "a"
+    },
+    {
+      "input": "z9y9",
+      "output": "zzzzzzzzzyyyyyyyyy"
+    },
+    {
+      "input": "b5c1d9",
+      "output": "bbbbbcddddddddd"
+    }
+  ]
+}

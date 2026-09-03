@@ -1,0 +1,17 @@
+{
+  "problem_id": "E14",
+  "tests": [
+    {
+      "input": "1\n",
+      "output": ""
+    },
+    {
+      "input": "2\n ",
+      "output": "  "
+    },
+    {
+      "input": "3\nz",
+      "output": "zzz"
+    }
+  ]
+}

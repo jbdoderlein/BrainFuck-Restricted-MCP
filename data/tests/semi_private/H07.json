@@ -1,0 +1,17 @@
+{
+  "problem_id": "H07",
+  "tests": [
+    {
+      "input": "2\nabc\nabd",
+      "output": "ab"
+    },
+    {
+      "input": "3\nsame\nsame\nsame",
+      "output": "same"
+    },
+    {
+      "input": "2\na\nb",
+      "output": ""
+    }
+  ]
+}

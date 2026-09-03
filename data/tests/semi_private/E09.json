@@ -1,0 +1,17 @@
+{
+  "problem_id": "E09",
+  "tests": [
+    {
+      "input": "a e i o u",
+      "output": "5"
+    },
+    {
+      "input": "bcdfg",
+      "output": "0"
+    },
+    {
+      "input": "Queueing",
+      "output": "5"
+    }
+  ]
+}

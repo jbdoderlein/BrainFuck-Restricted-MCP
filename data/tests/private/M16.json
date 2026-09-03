@@ -1,0 +1,17 @@
+{
+  "problem_id": "M16",
+  "tests": [
+    {
+      "input": "p\nq",
+      "output": "pq"
+    },
+    {
+      "input": "aaaa\nbbbb",
+      "output": "abababab"
+    },
+    {
+      "input": "hi\nyo",
+      "output": "hyio"
+    }
+  ]
+}

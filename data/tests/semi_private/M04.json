@@ -1,0 +1,17 @@
+{
+  "problem_id": "M04",
+  "tests": [
+    {
+      "input": "wxy",
+      "output": "zab"
+    },
+    {
+      "input": "bcdefghijklmnopqrstuvwxyz",
+      "output": "efghijklmnopqrstuvwxyzabc"
+    },
+    {
+      "input": "qrs",
+      "output": "tuv"
+    }
+  ]
+}

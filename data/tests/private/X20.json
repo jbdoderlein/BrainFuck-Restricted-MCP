@@ -1,0 +1,17 @@
+{
+  "problem_id": "X20",
+  "tests": [
+    {
+      "input": "9 4",
+      "output": "1"
+    },
+    {
+      "input": "13 2",
+      "output": "11"
+    },
+    {
+      "input": "20 5",
+      "output": "7"
+    }
+  ]
+}

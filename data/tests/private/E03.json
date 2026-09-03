@@ -1,0 +1,17 @@
+{
+  "problem_id": "E03",
+  "tests": [
+    {
+      "input": "Zoe",
+      "output": "Hello, Zoe!"
+    },
+    {
+      "input": "multi word name",
+      "output": "Hello, multi word name!"
+    },
+    {
+      "input": "42",
+      "output": "Hello, 42!"
+    }
+  ]
+}

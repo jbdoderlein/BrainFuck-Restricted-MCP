@@ -1,0 +1,17 @@
+{
+  "problem_id": "M16",
+  "tests": [
+    {
+      "input": "ab\nba",
+      "output": "abba"
+    },
+    {
+      "input": "abcde\nvwxyz",
+      "output": "avbwcxdyez"
+    },
+    {
+      "input": "mn\nop",
+      "output": "monp"
+    }
+  ]
+}

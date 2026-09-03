@@ -1,0 +1,17 @@
+{
+  "problem_id": "M02",
+  "tests": [
+    {
+      "input": "x",
+      "output": "1"
+    },
+    {
+      "input": "a b c d e f g",
+      "output": "7"
+    },
+    {
+      "input": "brainfuck is an esoteric language",
+      "output": "5"
+    }
+  ]
+}

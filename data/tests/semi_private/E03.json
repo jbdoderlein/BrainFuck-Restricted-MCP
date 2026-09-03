@@ -1,0 +1,17 @@
+{
+  "problem_id": "E03",
+  "tests": [
+    {
+      "input": "",
+      "output": "Hello, !"
+    },
+    {
+      "input": "van Gogh",
+      "output": "Hello, van Gogh!"
+    },
+    {
+      "input": "O'Brien",
+      "output": "Hello, O'Brien!"
+    }
+  ]
+}

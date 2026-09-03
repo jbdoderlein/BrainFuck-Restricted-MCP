@@ -1,0 +1,17 @@
+{
+  "problem_id": "X13",
+  "tests": [
+    {
+      "input": "",
+      "output": "yes"
+    },
+    {
+      "input": "(((((((())))))))",
+      "output": "yes"
+    },
+    {
+      "input": "[({})]",
+      "output": "yes"
+    }
+  ]
+}

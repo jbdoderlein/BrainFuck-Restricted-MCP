@@ -1,0 +1,17 @@
+{
+  "problem_id": "E08",
+  "tests": [
+    {
+      "input": "",
+      "output": ""
+    },
+    {
+      "input": "  ab  ",
+      "output": "  ba  "
+    },
+    {
+      "input": "!?",
+      "output": "?!"
+    }
+  ]
+}

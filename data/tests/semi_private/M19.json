@@ -1,0 +1,17 @@
+{
+  "problem_id": "M19",
+  "tests": [
+    {
+      "input": "",
+      "output": ""
+    },
+    {
+      "input": "abcdefgh",
+      "output": "aceg"
+    },
+    {
+      "input": "x",
+      "output": "x"
+    }
+  ]
+}

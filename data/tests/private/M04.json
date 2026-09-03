@@ -1,0 +1,17 @@
+{
+  "problem_id": "M04",
+  "tests": [
+    {
+      "input": "z",
+      "output": "c"
+    },
+    {
+      "input": "abcxyz",
+      "output": "defabc"
+    },
+    {
+      "input": "nop",
+      "output": "qrs"
+    }
+  ]
+}

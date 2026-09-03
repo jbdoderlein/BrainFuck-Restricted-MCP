@@ -1,0 +1,17 @@
+{
+  "problem_id": "X10",
+  "tests": [
+    {
+      "input": "abcdef\ndefabc",
+      "output": "yes"
+    },
+    {
+      "input": "xyz\nzyx",
+      "output": "no"
+    },
+    {
+      "input": "aab\naba",
+      "output": "yes"
+    }
+  ]
+}

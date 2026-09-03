@@ -1,0 +1,17 @@
+{
+  "problem_id": "X19",
+  "tests": [
+    {
+      "input": "6\n6 5 4 3 2 1",
+      "output": "yes"
+    },
+    {
+      "input": "4\n0 1 2 3",
+      "output": "no"
+    },
+    {
+      "input": "1\n2",
+      "output": "no"
+    }
+  ]
+}

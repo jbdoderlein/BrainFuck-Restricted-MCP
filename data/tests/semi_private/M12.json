@@ -1,0 +1,17 @@
+{
+  "problem_id": "M12",
+  "tests": [
+    {
+      "input": "",
+      "output": ""
+    },
+    {
+      "input": "aeiouAEIOU",
+      "output": ""
+    },
+    {
+      "input": "sky",
+      "output": "sky"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "problem_id": "M17",
+  "tests": [
+    {
+      "input": "end with space ",
+      "output": "end_with_space_"
+    },
+    {
+      "input": " start with space",
+      "output": "_start_with_space"
+    },
+    {
+      "input": "a b c d e",
+      "output": "a_b_c_d_e"
+    }
+  ]
+}

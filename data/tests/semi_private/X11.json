@@ -1,0 +1,17 @@
+{
+  "problem_id": "X11",
+  "tests": [
+    {
+      "input": "4\n1 1 1 1",
+      "output": "0"
+    },
+    {
+      "input": "1\n5",
+      "output": "0"
+    },
+    {
+      "input": "4\n1 2 3 4",
+      "output": "0"
+    }
+  ]
+}

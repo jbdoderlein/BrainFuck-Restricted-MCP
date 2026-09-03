@@ -1,0 +1,17 @@
+{
+  "problem_id": "E16",
+  "tests": [
+    {
+      "input": "aa",
+      "output": "a a"
+    },
+    {
+      "input": "!Z",
+      "output": "! Z"
+    },
+    {
+      "input": "1",
+      "output": "1 1"
+    }
+  ]
+}

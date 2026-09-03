@@ -1,0 +1,17 @@
+{
+  "problem_id": "E17",
+  "tests": [
+    {
+      "input": "",
+      "output": ""
+    },
+    {
+      "input": "  spaced out  ",
+      "output": "  SPACED OUT  "
+    },
+    {
+      "input": "café",
+      "output": "CAFÉ"
+    }
+  ]
+}

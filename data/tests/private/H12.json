@@ -1,0 +1,17 @@
+{
+  "problem_id": "H12",
+  "tests": [
+    {
+      "input": "ZZ",
+      "output": "180"
+    },
+    {
+      "input": "brainfuck",
+      "output": "949"
+    },
+    {
+      "input": "09",
+      "output": "105"
+    }
+  ]
+}

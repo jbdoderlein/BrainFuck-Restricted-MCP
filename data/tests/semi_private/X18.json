@@ -1,0 +1,17 @@
+{
+  "problem_id": "X18",
+  "tests": [
+    {
+      "input": "40",
+      "output": "XL"
+    },
+    {
+      "input": "90",
+      "output": "XC"
+    },
+    {
+      "input": "444",
+      "output": "CDXLIV"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "problem_id": "E09",
+  "tests": [
+    {
+      "input": "",
+      "output": "0"
+    },
+    {
+      "input": "AaEeIiOoUu",
+      "output": "10"
+    },
+    {
+      "input": "sky",
+      "output": "0"
+    }
+  ]
+}

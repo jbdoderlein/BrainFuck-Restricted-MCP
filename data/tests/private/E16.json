@@ -1,0 +1,17 @@
+{
+  "problem_id": "E16",
+  "tests": [
+    {
+      "input": "mid dle",
+      "output": "m e"
+    },
+    {
+      "input": "  x  ",
+      "output": "   "
+    },
+    {
+      "input": "AZ",
+      "output": "A Z"
+    }
+  ]
+}

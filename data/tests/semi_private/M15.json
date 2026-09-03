@@ -1,0 +1,17 @@
+{
+  "problem_id": "M15",
+  "tests": [
+    {
+      "input": "aabbcc\nabcabc",
+      "output": "yes"
+    },
+    {
+      "input": "z\ny",
+      "output": "no"
+    },
+    {
+      "input": "aabb\nabab",
+      "output": "yes"
+    }
+  ]
+}

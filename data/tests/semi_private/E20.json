@@ -1,0 +1,17 @@
+{
+  "problem_id": "E20",
+  "tests": [
+    {
+      "input": "-5 -3",
+      "output": "less"
+    },
+    {
+      "input": "0 0",
+      "output": "equal"
+    },
+    {
+      "input": "1 -1",
+      "output": "greater"
+    }
+  ]
+}

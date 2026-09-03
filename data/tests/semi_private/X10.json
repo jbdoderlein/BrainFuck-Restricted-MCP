@@ -1,0 +1,17 @@
+{
+  "problem_id": "X10",
+  "tests": [
+    {
+      "input": "a\na",
+      "output": "yes"
+    },
+    {
+      "input": "ab\nba",
+      "output": "yes"
+    },
+    {
+      "input": "aaaa\naaaa",
+      "output": "yes"
+    }
+  ]
+}

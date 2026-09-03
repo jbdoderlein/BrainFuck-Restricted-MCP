@@ -1,0 +1,17 @@
+{
+  "problem_id": "M11",
+  "tests": [
+    {
+      "input": "aaaa\na",
+      "output": "4"
+    },
+    {
+      "input": "banana\nana",
+      "output": "2"
+    },
+    {
+      "input": "abc\nabcd",
+      "output": "0"
+    }
+  ]
+}

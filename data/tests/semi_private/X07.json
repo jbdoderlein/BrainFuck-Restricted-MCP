@@ -1,0 +1,17 @@
+{
+  "problem_id": "X07",
+  "tests": [
+    {
+      "input": "",
+      "output": "0"
+    },
+    {
+      "input": "aa",
+      "output": "2"
+    },
+    {
+      "input": "forgeeksskeegfor",
+      "output": "10"
+    }
+  ]
+}

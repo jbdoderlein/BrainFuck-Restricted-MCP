@@ -1,0 +1,17 @@
+{
+  "problem_id": "H20",
+  "tests": [
+    {
+      "input": "4\nd\nc\nb\na",
+      "output": "a b c d"
+    },
+    {
+      "input": "3\nApple\napple\nBanana",
+      "output": "Apple Banana apple"
+    },
+    {
+      "input": "2\nabc\nab",
+      "output": "ab abc"
+    }
+  ]
+}

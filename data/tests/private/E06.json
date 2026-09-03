@@ -1,0 +1,17 @@
+{
+  "problem_id": "E06",
+  "tests": [
+    {
+      "input": "999999",
+      "output": "odd"
+    },
+    {
+      "input": "-1000000",
+      "output": "even"
+    },
+    {
+      "input": "3",
+      "output": "odd"
+    }
+  ]
+}

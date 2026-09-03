@@ -1,0 +1,17 @@
+{
+  "problem_id": "H18",
+  "tests": [
+    {
+      "input": "111",
+      "output": "yes"
+    },
+    {
+      "input": "222222222",
+      "output": "yes"
+    },
+    {
+      "input": "5",
+      "output": "no"
+    }
+  ]
+}

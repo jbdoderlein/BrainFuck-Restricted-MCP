@@ -1,0 +1,17 @@
+{
+  "problem_id": "E15",
+  "tests": [
+    {
+      "input": "  spaced  \nline",
+      "output": "  spaced   line"
+    },
+    {
+      "input": "x\ny",
+      "output": "x y"
+    },
+    {
+      "input": "line1\ntrailing space line2 ",
+      "output": "line1 trailing space line2 "
+    }
+  ]
+}

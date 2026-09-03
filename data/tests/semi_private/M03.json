@@ -1,0 +1,17 @@
+{
+  "problem_id": "M03",
+  "tests": [
+    {
+      "input": "aabbaa",
+      "output": "a2b2a2"
+    },
+    {
+      "input": "abababab",
+      "output": "a1b1a1b1a1b1a1b1"
+    },
+    {
+      "input": "wwwwwwww",
+      "output": "w8"
+    }
+  ]
+}

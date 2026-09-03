@@ -1,0 +1,17 @@
+{
+  "problem_id": "H01",
+  "tests": [
+    {
+      "input": "()",
+      "output": "yes"
+    },
+    {
+      "input": "(((",
+      "output": "no"
+    },
+    {
+      "input": ")))",
+      "output": "no"
+    }
+  ]
+}

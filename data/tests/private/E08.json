@@ -1,0 +1,17 @@
+{
+  "problem_id": "E08",
+  "tests": [
+    {
+      "input": "Palindrome",
+      "output": "emordnilaP"
+    },
+    {
+      "input": "0123456789",
+      "output": "9876543210"
+    },
+    {
+      "input": "z",
+      "output": "z"
+    }
+  ]
+}

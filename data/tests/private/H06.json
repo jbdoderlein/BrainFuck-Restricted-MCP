@@ -1,0 +1,17 @@
+{
+  "problem_id": "H06",
+  "tests": [
+    {
+      "input": "x yy zzz",
+      "output": "zzz"
+    },
+    {
+      "input": "abcdefg abcdef abcdefg",
+      "output": "abcdefg"
+    },
+    {
+      "input": "tie tie tied",
+      "output": "tied"
+    }
+  ]
+}

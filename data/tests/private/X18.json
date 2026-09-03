@@ -1,0 +1,17 @@
+{
+  "problem_id": "X18",
+  "tests": [
+    {
+      "input": "3999",
+      "output": "MMMCMXCIX"
+    },
+    {
+      "input": "1",
+      "output": "I"
+    },
+    {
+      "input": "888",
+      "output": "DCCCLXXXVIII"
+    }
+  ]
+}

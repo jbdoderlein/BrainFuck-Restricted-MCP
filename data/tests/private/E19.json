@@ -1,0 +1,17 @@
+{
+  "problem_id": "E19",
+  "tests": [
+    {
+      "input": "-5 4",
+      "output": "0"
+    },
+    {
+      "input": "7 -3",
+      "output": "2"
+    },
+    {
+      "input": "-7 -8",
+      "output": "-7"
+    }
+  ]
+}

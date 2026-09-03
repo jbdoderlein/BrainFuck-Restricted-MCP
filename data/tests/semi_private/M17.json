@@ -1,0 +1,17 @@
+{
+  "problem_id": "M17",
+  "tests": [
+    {
+      "input": "  a  b  ",
+      "output": "__a__b__"
+    },
+    {
+      "input": "no_underscore_needed",
+      "output": "no_underscore_needed"
+    },
+    {
+      "input": " ",
+      "output": "_"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+{
+  "problem_id": "M11",
+  "tests": [
+    {
+      "input": "mississippi\nss",
+      "output": "2"
+    },
+    {
+      "input": "zzzz\nzz",
+      "output": "3"
+    },
+    {
+      "input": "abcabcabc\nabca",
+      "output": "2"
+    }
+  ]
+}
