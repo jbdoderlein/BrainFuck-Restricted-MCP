@@ -1,8 +1,0 @@
-{
-  "problem_id": "E02",
-  "tests": [
-    {"input": "private-test-01", "output": "private-test-01"},
-    {"input": "tabs\tstay", "output": "tabs\tstay"}
-  ]
-}
-

@@ -1,9 +1,0 @@
-{
-  "problem_id": "E02",
-  "tests": [
-    {"input": "", "output": ""},
-    {"input": " leading", "output": " leading"},
-    {"input": "trailing ", "output": "trailing "}
-  ]
-}
-
