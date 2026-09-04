@@ -95,6 +95,46 @@ class ViewerTests(unittest.TestCase):
             self.assertEqual(metadata["usage"]["cache_read_input_tokens"], 10_000)
             self.assertEqual(metadata["usage"]["output_tokens"], 500)
 
+    def test_parses_pi_tool_calls_and_assistant_messages(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            path = Path(temporary) / "trace.jsonl"
+            records = [
+                {"type": "session", "version": 3, "id": "abc", "cwd": "/workspace"},
+                {"type": "agent_start"},
+                {
+                    "type": "tool_execution_start",
+                    "toolCallId": "call-1",
+                    "toolName": "evaluate_solution",
+                    "args": {},
+                },
+                {
+                    "type": "tool_execution_end",
+                    "toolCallId": "call-1",
+                    "toolName": "evaluate_solution",
+                    "result": {
+                        "content": [{"type": "text", "text": '{"status": "passed"}'}],
+                    },
+                    "isError": False,
+                },
+                {
+                    "type": "message_end",
+                    "message": {
+                        "role": "assistant",
+                        "content": [{"type": "text", "text": "Done."}],
+                        "usage": {"input": 120, "output": 40, "cacheRead": 10},
+                    },
+                },
+            ]
+            path.write_text("\n".join(json.dumps(record) for record in records), encoding="utf-8")
+            events, result, metadata = parse_trace(path, "pi")
+            self.assertEqual(result, "Done.")
+            self.assertEqual([event["kind"] for event in events], ["tool", "result", "message"])
+            self.assertEqual(events[1]["result"], '{"status": "passed"}')
+            self.assertTrue(metadata["usage_is_estimate"])
+            self.assertEqual(metadata["usage"]["input_tokens"], 120)
+            self.assertEqual(metadata["usage"]["output_tokens"], 40)
+            self.assertEqual(metadata["usage"]["cache_read_input_tokens"], 10)
+
     def test_uses_documented_model_for_default_codex_run(self) -> None:
         model, inferred = resolve_model("codex", {"model": None}, {})
         self.assertEqual(model, "gpt-5.6-sol")

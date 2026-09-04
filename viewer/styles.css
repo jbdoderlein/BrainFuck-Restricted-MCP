@@ -87,6 +87,12 @@ h2 { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp
 .section-title { display: flex; align-items: center; justify-content: space-between; margin: 0 0 11px; }
 .section-title h3 { margin: 0; font-size: 12px; text-transform: uppercase; letter-spacing: .1em; }
 .count { color: var(--muted); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11px; }
+.trace-filters { display: flex; gap: 7px; margin: 0 0 16px; padding-bottom: 2px; overflow-x: auto; }
+.trace-filter { flex: 0 0 auto; display: inline-flex; align-items: center; gap: 7px; padding: 7px 10px; color: #53635c; background: var(--panel); border: 1px solid var(--line); border-radius: 8px; cursor: pointer; font-size: 11px; font-weight: 750; }
+.trace-filter:hover { color: var(--ink); border-color: #a8aea7; }
+.trace-filter.active { color: #174d3a; background: #dcebe3; border-color: #9fc7b4; }
+.trace-filter span { min-width: 18px; padding: 1px 5px; color: var(--muted); background: #e8e8e1; border-radius: 9px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 9px; text-align: center; }
+.trace-filter.active span { color: #174d3a; background: #bddacb; }
 .result-card { position: relative; padding: 22px 24px; background: var(--deep); color: #ebf5ef; border-radius: 13px; box-shadow: var(--shadow); }
 .result-card::before { content: ""; position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--mint); border-radius: 13px 0 0 13px; }
 .copy-button { padding: 5px 8px; color: #a8b9b2; background: transparent; border: 1px solid #4c6259; border-radius: 6px; cursor: pointer; font-size: 10px; }

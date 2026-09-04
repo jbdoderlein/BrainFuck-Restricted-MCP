@@ -1,4 +1,19 @@
-const state = { sessions: [], selectedId: null, client: "all", query: "", activeTab: "result" };
+const state = {
+  sessions: [],
+  selectedId: null,
+  client: "all",
+  query: "",
+  activeTab: "result",
+  traceFilter: "all",
+};
+
+const traceFilters = [
+  { value: "all", label: "All events" },
+  { value: "message", label: "Agent messages" },
+  { value: "tool", label: "Tool calls" },
+  { value: "result", label: "Tool results" },
+  { value: "error", label: "Errors" },
+];
 
 const elements = {
   list: document.querySelector("#session-list"),
@@ -111,9 +126,18 @@ function renderDetail() {
         <pre>${escapeHtml(artifact.content)}</pre>
       </article>`).join("")
     : '<div class="no-content">This session has no artifact files.</div>';
-  const timeline = session.events.length
-    ? session.events.map(eventMarkup).join("")
-    : '<div class="no-content">This session has no readable trace events.</div>';
+  const visibleEvents = session.events
+    .map((event, index) => ({ event, index }))
+    .filter(({ event }) => state.traceFilter === "all" || event.kind === state.traceFilter);
+  const timeline = visibleEvents.length
+    ? visibleEvents.map(({ event, index }) => eventMarkup(event, index)).join("")
+    : `<div class="no-content">No ${escapeHtml(traceFilters.find((filter) => filter.value === state.traceFilter)?.label.toLowerCase() || "events")} appear in this trace.</div>`;
+  const traceFilterMarkup = traceFilters.map((filter) => {
+    const count = filter.value === "all"
+      ? session.events.length
+      : session.events.filter((event) => event.kind === filter.value).length;
+    return `<button class="trace-filter ${state.traceFilter === filter.value ? "active" : ""}" type="button" aria-pressed="${state.traceFilter === filter.value}" data-trace-filter="${filter.value}">${filter.label}<span>${count}</span></button>`;
+  }).join("");
   const history = session.submission_history || [];
   const historyMarkup = history.length
     ? history.map((version) => `
@@ -197,7 +221,8 @@ function renderDetail() {
       </section>
 
       <section class="tab-panel ${state.activeTab === "trace" ? "active" : ""}" data-panel="trace">
-        <div class="section-title"><h3>Agent trace</h3><span class="count">${session.event_count} events</span></div>
+        <div class="section-title"><h3>Agent trace</h3><span class="count">${visibleEvents.length} of ${session.event_count} events</span></div>
+        <div class="trace-filters" role="group" aria-label="Filter trace events">${traceFilterMarkup}</div>
         <div class="timeline">${timeline}</div>
       </section>
 
@@ -211,6 +236,12 @@ function renderDetail() {
   document.querySelectorAll("[data-tab]").forEach((button) => {
     button.addEventListener("click", () => {
       state.activeTab = button.dataset.tab;
+      renderDetail();
+    });
+  });
+  document.querySelectorAll("[data-trace-filter]").forEach((button) => {
+    button.addEventListener("click", () => {
+      state.traceFilter = button.dataset.traceFilter;
       renderDetail();
     });
   });

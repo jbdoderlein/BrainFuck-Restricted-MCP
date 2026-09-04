@@ -107,6 +107,21 @@ def aggregate_usage(messages: dict[str, dict[str, Any]]) -> dict[str, Any]:
     return {key: value for key, value in total.items() if value}
 
 
+def pi_usage_to_common(usage: dict[str, Any]) -> dict[str, Any]:
+    mapping = {
+        "input": "input_tokens",
+        "output": "output_tokens",
+        "cacheRead": "cache_read_input_tokens",
+        "cacheWrite": "cache_creation_input_tokens",
+    }
+    converted: dict[str, Any] = {}
+    for pi_key, common_key in mapping.items():
+        value = usage.get(pi_key)
+        if isinstance(value, (int, float)):
+            converted[common_key] = value
+    return converted
+
+
 def normalized_model(model: str) -> str:
     return model.lower().split("[", 1)[0].strip()
 
@@ -174,6 +189,7 @@ def parse_trace(path: Path, client: str) -> tuple[list[dict[str, Any]], str, dic
     tool_names: dict[str, str] = {}
     claude_messages: dict[str, dict[str, Any]] = {}
     current_claude_message = ""
+    pi_messages: dict[str, dict[str, Any]] = {}
 
     for raw_line in read_text(path).splitlines():
         try:
@@ -206,6 +222,51 @@ def parse_trace(path: Path, client: str) -> tuple[list[dict[str, Any]], str, dic
                     events.append({"kind": "error", "title": "Client error", "text": str(item.get("message") or "Unknown error")})
             elif event_type == "turn.completed" and isinstance(event.get("usage"), dict):
                 trace_metadata["usage"] = event["usage"]
+            continue
+
+        if client == "pi":
+            if event_type == "tool_execution_start":
+                tool_call_id = str(event.get("toolCallId") or "")
+                name = str(event.get("toolName") or "Tool")
+                tool_names[tool_call_id] = readable_tool_name(name)
+                events.append(
+                    {
+                        "kind": "tool",
+                        "title": readable_tool_name(name),
+                        "arguments": event.get("args"),
+                        "tool_id": tool_call_id,
+                        "status": "called",
+                    }
+                )
+            elif event_type == "tool_execution_end":
+                tool_call_id = str(event.get("toolCallId") or "")
+                result = event.get("result")
+                content = result.get("content") if isinstance(result, dict) else None
+                events.append(
+                    {
+                        "kind": "result",
+                        "title": f"{tool_names.get(tool_call_id, 'Tool')} result",
+                        "result": text_from_content(content) if content is not None else result,
+                        "tool_id": tool_call_id,
+                        "status": "error" if event.get("isError") else "completed",
+                    }
+                )
+            elif event_type == "message_end" and isinstance(event.get("message"), dict):
+                message = event["message"]
+                if message.get("role") == "assistant":
+                    text = "\n".join(
+                        block["text"]
+                        for block in message.get("content", [])
+                        if isinstance(block, dict)
+                        and block.get("type") == "text"
+                        and isinstance(block.get("text"), str)
+                    )
+                    if text:
+                        final_result = text
+                        events.append({"kind": "message", "title": "Agent message", "text": text})
+                    usage = message.get("usage")
+                    if isinstance(usage, dict):
+                        pi_messages[str(len(pi_messages))] = pi_usage_to_common(usage)
             continue
 
         if event_type == "system" and event.get("subtype") == "init":
@@ -277,6 +338,9 @@ def parse_trace(path: Path, client: str) -> tuple[list[dict[str, Any]], str, dic
 
     if client == "claude" and not trace_metadata.get("usage") and claude_messages:
         trace_metadata["usage"] = aggregate_usage(claude_messages)
+        trace_metadata["usage_is_estimate"] = True
+    if client == "pi" and not trace_metadata.get("usage") and pi_messages:
+        trace_metadata["usage"] = aggregate_usage(pi_messages)
         trace_metadata["usage_is_estimate"] = True
 
     return events, final_result, trace_metadata
